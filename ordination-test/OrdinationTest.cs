@@ -95,9 +95,9 @@ public class OrdinationTest
     {
         // Arrange
         var dagligSkaev = new DagligSkæv(startDato, slutDato, laegemiddel);
-        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 9, 30, 0), 2);
-        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 13, 30, 0), 1);
-        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 19, 30, 0), 3);
+        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 9, 0, 0), 2);
+        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 13, 0, 0), 1);
+        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 19, 0, 0), 3);
         
         // Act
         double doegnDosis = dagligSkaev.doegnDosis();
@@ -111,9 +111,9 @@ public class OrdinationTest
     {
         // Arrange
         var dagligSkaev = new DagligSkæv(startDato, slutDato, laegemiddel);
-        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 9, 30, 0), 2);
-        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 13, 30, 0), 1);
-        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 19, 30, 0), 3);
+        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 9, 0, 0), 2);
+        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 13, 0, 0), 1);
+        dagligSkaev.opretDosis(new DateTime(1, 1, 1, 19, 0, 0), 3);
         
         // Act
         double samletDosis = dagligSkaev.samletDosis();
