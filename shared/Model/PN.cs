@@ -17,13 +17,25 @@ public class PN : Ordination {
     /// Returner false ellers og datoen givesDen ignoreres
     /// </summary>
     public bool givDosis(Dato givesDen) {
-        // TODO: Implement!
+        if (givesDen.dato >= startDen && givesDen.dato <= slutDen) {
+            dates.Add(givesDen);
+            return true;
+        }
         return false;
     }
 
     public override double doegnDosis() {
-    	// TODO: Implement!
-        return -1;
+        if (dates.Count == 0) {
+            return 0;
+        }
+        
+        DateTime firstDate = dates.Min(d => d.dato);
+        DateTime lastDate = dates.Max(d => d.dato);
+        
+        // If only one date, the period is 1 day
+        int daysBetween = (int)(lastDate - firstDate).TotalDays + 1;
+        
+        return (dates.Count * antalEnheder) / daysBetween;
     }
 
 

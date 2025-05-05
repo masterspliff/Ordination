@@ -131,26 +131,70 @@ public class DataService
     }
 
     public PN OpretPN(int patientId, int laegemiddelId, double antal, DateTime startDato, DateTime slutDato) {
-        // TODO: Implement!
-        return null!;
+        Patient patient = db.Patienter.Find(patientId) ?? throw new ArgumentNullException("Patient findes ikke");
+        Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId) ?? throw new ArgumentNullException("Lægemiddel findes ikke");
+        
+        if (startDato > slutDato) {
+            throw new ArgumentException("Startdato skal være før eller lig med slutdato");
+        }
+        
+        PN pn = new PN(startDato, slutDato, antal, laegemiddel);
+        patient.ordinationer.Add(pn);
+        db.Ordinationer.Add(pn);
+        db.SaveChanges();
+        
+        return pn;
     }
 
     public DagligFast OpretDagligFast(int patientId, int laegemiddelId, 
         double antalMorgen, double antalMiddag, double antalAften, double antalNat, 
         DateTime startDato, DateTime slutDato) {
 
-        // TODO: Implement!
-        return null!;
+        Patient patient = db.Patienter.Find(patientId) ?? throw new ArgumentNullException("Patient findes ikke");
+        Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId) ?? throw new ArgumentNullException("Lægemiddel findes ikke");
+        
+        if (startDato > slutDato) {
+            throw new ArgumentException("Startdato skal være før eller lig med slutdato");
+        }
+        
+        DagligFast dagligFast = new DagligFast(startDato, slutDato, laegemiddel, antalMorgen, antalMiddag, antalAften, antalNat);
+        patient.ordinationer.Add(dagligFast);
+        db.Ordinationer.Add(dagligFast);
+        db.SaveChanges();
+        
+        return dagligFast;
     }
 
     public DagligSkæv OpretDagligSkaev(int patientId, int laegemiddelId, Dosis[] doser, DateTime startDato, DateTime slutDato) {
-        // TODO: Implement!
-        return null!;
+        Patient patient = db.Patienter.Find(patientId) ?? throw new ArgumentNullException("Patient findes ikke");
+        Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId) ?? throw new ArgumentNullException("Lægemiddel findes ikke");
+        
+        if (startDato > slutDato) {
+            throw new ArgumentException("Startdato skal være før eller lig med slutdato");
+        }
+        
+        if (doser.Length == 0) {
+            throw new ArgumentException("Der skal være mindst én dosis");
+        }
+        
+        DagligSkæv dagligSkaev = new DagligSkæv(startDato, slutDato, laegemiddel, doser);
+        patient.ordinationer.Add(dagligSkaev);
+        db.Ordinationer.Add(dagligSkaev);
+        db.SaveChanges();
+        
+        return dagligSkaev;
     }
 
     public string AnvendOrdination(int id, Dato dato) {
-        // TODO: Implement!
-        return null!;
+        PN pn = db.PNs.Include(o => o.dates).FirstOrDefault(o => o.OrdinationId == id) 
+            ?? throw new ArgumentNullException("Ordinationen findes ikke");
+        
+        if (pn.givDosis(dato)) {
+            db.SaveChanges();
+            return "Dosis givet";
+        } else {
+            return "Dosis ikke givet - dato er ikke inden for ordinationens gyldighedsperiode";
+        }
     }
 
     /// <summary>
@@ -161,8 +205,20 @@ public class DataService
     /// <param name="laegemiddel"></param>
     /// <returns></returns>
 	public double GetAnbefaletDosisPerDøgn(int patientId, int laegemiddelId) {
-        // TODO: Implement!
-        return -1;
+        Patient patient = db.Patienter.Find(patientId) ?? throw new ArgumentNullException("Patient findes ikke");
+        Laegemiddel laegemiddel = db.Laegemiddler.Find(laegemiddelId) ?? throw new ArgumentNullException("Lægemiddel findes ikke");
+        
+        double dosisPerKg;
+        
+        if (patient.vaegt < 25) {
+            dosisPerKg = laegemiddel.enhedPrKgPrDoegnLet;
+        } else if (patient.vaegt > 120) {
+            dosisPerKg = laegemiddel.enhedPrKgPrDoegnTung;
+        } else {
+            dosisPerKg = laegemiddel.enhedPrKgPrDoegnNormal;
+        }
+        
+        return dosisPerKg * patient.vaegt;
 	}
     
 }
