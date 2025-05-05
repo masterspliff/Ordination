@@ -7,6 +7,16 @@ public abstract class Ordination {
     public Laegemiddel laegemiddel { get; set; }
     
     public Ordination(Laegemiddel laegemiddel, DateTime startDen = new DateTime(), DateTime slutDen = new DateTime()) {
+        if (laegemiddel == null)
+        {
+            throw new ArgumentNullException(nameof(laegemiddel), "Lægemiddel må ikke være null");
+        }
+        
+        if (startDen > slutDen)
+        {
+            throw new ArgumentException("Startdato skal være før eller lig med slutdato");
+        }
+        
     	this.startDen = startDen;
     	this.slutDen = slutDen;
         this.laegemiddel = laegemiddel;

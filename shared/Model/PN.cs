@@ -5,6 +5,11 @@ public class PN : Ordination {
     public List<Dato> dates { get; set; } = new List<Dato>();
 
     public PN (DateTime startDen, DateTime slutDen, double antalEnheder, Laegemiddel laegemiddel) : base(laegemiddel, startDen, slutDen) {
+        if (antalEnheder <= 0)
+        {
+            throw new ArgumentException("Antal enheder skal være større end 0");
+        }
+        
 		this.antalEnheder = antalEnheder;
 	}
 
