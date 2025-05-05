@@ -9,18 +9,22 @@ public class DagligFast : Ordination {
     public Dosis NatDosis { get; set; } = new Dosis();
 
 	public DagligFast(DateTime startDen, DateTime slutDen, Laegemiddel laegemiddel, double morgenAntal, double middagAntal, double aftenAntal, double natAntal) : base(laegemiddel, startDen, slutDen) {
+        
+        if (morgenAntal < 0 || middagAntal < 0 || aftenAntal < 0 || natAntal < 0)
+        {
+            throw new ArgumentException("Dosisantal må ikke være negativt.");
+        }
         MorgenDosis = new Dosis(CreateTimeOnly(6, 0, 0), morgenAntal);
         MiddagDosis = new Dosis(CreateTimeOnly(12, 0, 0), middagAntal);
         AftenDosis = new Dosis(CreateTimeOnly(18, 0, 0), aftenAntal);
         NatDosis = new Dosis(CreateTimeOnly(23, 59, 0), natAntal);
-	}
-
-    public DagligFast() {
-        // Empty constructor for Entity Framework
-        // Note: This bypasses the validation in the base class constructor
     }
 
-	public override double samletDosis() {
+    public DagligFast() : base() {
+        // Parameterless constructor for Entity Framework Core
+    }
+
+    public override double samletDosis() {
 		
 		return base.antalDage() * doegnDosis();
 	}

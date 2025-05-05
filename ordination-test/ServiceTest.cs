@@ -9,7 +9,8 @@ using shared.Model;
 [TestClass]
 public class ServiceTest
 {
-    private DataService? service;
+    // Initialize with null! as it's guaranteed to be set in TestInitialize
+    private DataService service = null!; 
 
     [TestInitialize]
     public void SetupBeforeEachTest()
@@ -24,7 +25,8 @@ public class ServiceTest
     [TestMethod]
     public void PatientsExist()
     {
-        Assert.IsNotNull(service.GetPatienter());
+        // No longer need null check or suppression as service is non-nullable now
+        Assert.IsNotNull(service.GetPatienter()); 
     }
 
     [TestMethod]

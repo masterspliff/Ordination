@@ -362,4 +362,14 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# aider
 .aider*
+
+# pdf
+*.pdf
+
+*.pkg
+*.docx
+
+.aider.conf.yml

@@ -9,8 +9,9 @@ using System.Collections.Generic;
 public class OrdinationTest
 {
     // Test data
-    private Patient patient;
-    private Laegemiddel laegemiddel;
+    // Initialize with null! as they are guaranteed to be set in TestInitialize
+    private Patient patient = null!;
+    private Laegemiddel laegemiddel = null!;
     private DateTime startDato;
     private DateTime slutDato;
 
@@ -296,7 +297,10 @@ public class OrdinationTest
     public void Ordination_ManglendeReference_KasterException()
     {
         // Arrange & Act - EK-8: Manglende lægemiddel-reference
+        // Suppress the warning for intentionally passing null to a non-nullable parameter for this test
+        #pragma warning disable CS8625 
         var pn = new PN(startDato, slutDato, 2, null);
+        #pragma warning restore CS8625
     }
     #endregion
 }

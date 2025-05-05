@@ -10,10 +10,11 @@ public class PN : Ordination {
             throw new ArgumentException("Antal enheder skal være større end 0");
         }
         
-		this.antalEnheder = antalEnheder;
-	}
+        this.antalEnheder = antalEnheder;
+    }
 
-    public PN() : base(null!, new DateTime(), new DateTime()) {
+    public PN() : base() {
+         // Parameterless constructor for Entity Framework Core
     }
 
     /// <summary>
