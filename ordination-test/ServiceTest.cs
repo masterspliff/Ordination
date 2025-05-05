@@ -9,7 +9,7 @@ using shared.Model;
 [TestClass]
 public class ServiceTest
 {
-    private DataService service;
+    private DataService? service;
 
     [TestInitialize]
     public void SetupBeforeEachTest()

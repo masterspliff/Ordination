@@ -15,7 +15,9 @@ public class DagligFast : Ordination {
         NatDosis = new Dosis(CreateTimeOnly(23, 59, 0), natAntal);
 	}
 
-    public DagligFast() : base(null!, new DateTime(), new DateTime()) {
+    public DagligFast() {
+        // Empty constructor for Entity Framework
+        // Note: This bypasses the validation in the base class constructor
     }
 
 	public override double samletDosis() {

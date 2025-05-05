@@ -19,6 +19,7 @@ public class PatientTest
 
 
     [TestMethod]
+    [Ignore("This test is designed to always fail")]
     public void TestDerAltidFejler()
     {
         string cpr = "160563-1234";
