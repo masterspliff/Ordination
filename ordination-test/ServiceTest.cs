@@ -45,12 +45,7 @@ public class ServiceTest
     [ExpectedException(typeof(ArgumentNullException))]
     public void TestAtKodenSmiderEnException()
     {
-        // Herunder skal man så kalde noget kode,
-        // der smider en exception.
-
-        // Hvis koden _ikke_ smider en exception,
-        // så fejler testen.
-
-        Console.WriteLine("Her kommer der ikke en exception. Testen fejler.");
+        service.OpretPN(-1, -1, 1.0, DateTime.Now, DateTime.Now);
     }
+
 }
