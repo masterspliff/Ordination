@@ -1,0 +1,11 @@
+graph TD
+    Actor((Læge)) --> UC1[UC1: Opret Patient Ordination]
+    Actor --> UC2[UC2: Anvend PN Ordination]
+    Actor --> UC3[UC3: Vis Statistik]
+    
+    UC1 --> UC1_1[Opret PN Ordination]
+    UC1 --> UC1_2[Opret DagligFast Ordination]
+    UC1 --> UC1_3[Opret DagligSkæv Ordination]
+    
+    UC3 --> UC3_1[Vis ordinationer per lægemiddel]
+    UC3 --> UC3_2[Vis patient ordinationsdetaljer]

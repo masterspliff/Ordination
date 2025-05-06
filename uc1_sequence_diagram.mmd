@@ -1,0 +1,34 @@
+sequenceDiagram
+    actor Læge
+    participant UI as Brugergrænsefladen
+    participant Service as DataService
+    participant DB as Database
+    
+    Læge->>UI: Vælg patient
+    Læge->>UI: Vælg lægemiddel
+    Læge->>UI: Vælg ordinationstype
+    
+    alt PN Ordination
+        Læge->>UI: Angiv PN dosis
+        Læge->>UI: Angiv start- og slutdato
+        UI->>Service: opretPN(patient, lægemiddel, dosis, startDato, slutDato)
+        Service->>DB: Gem PN ordination
+        DB-->>Service: Bekræft
+        Service-->>UI: Bekræft
+    else DagligFast Ordination
+        Læge->>UI: Angiv morgen-, middag-, aften- og nat-dosis
+        Læge->>UI: Angiv start- og slutdato
+        UI->>Service: opretDagligFast(patient, lægemiddel, dosisMorgen, dosisMiddag, dosisAften, dosisNat, startDato, slutDato)
+        Service->>DB: Gem DagligFast ordination
+        DB-->>Service: Bekræft
+        Service-->>UI: Bekræft
+    else DagligSkæv Ordination
+        Læge->>UI: Angiv doser med tidspunkter
+        Læge->>UI: Angiv start- og slutdato
+        UI->>Service: opretDagligSkaev(patient, lægemiddel, doser, startDato, slutDato)
+        Service->>DB: Gem DagligSkæv ordination
+        DB-->>Service: Bekræft
+        Service-->>UI: Bekræft
+    end
+    
+    UI-->>Læge: Vis bekræftelse

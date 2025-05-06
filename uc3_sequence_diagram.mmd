@@ -1,0 +1,25 @@
+sequenceDiagram
+    actor Læge
+    participant UI as Brugergrænsefladen
+    participant Service as DataService
+    participant DB as Database
+    
+    alt Vis ordinationer per lægemiddel
+        Læge->>UI: Vælg "Vis statistik"
+        UI->>Service: GetOrdinationerPerLægemiddel()
+        Service->>DB: Hent data
+        DB-->>Service: Data
+        Service-->>UI: Statistik data
+        UI-->>Læge: Vis statistik
+    else Vis patient ordinationsdetaljer
+        Læge->>UI: Vælg patient
+        UI->>Service: GetPatienter()
+        Service-->>UI: Liste af patienter
+        
+        Læge->>UI: Vælg "Vis ordinationer"
+        UI->>Service: GetOrdinationerForPatient(patientId)
+        Service->>DB: Hent ordinationer
+        DB-->>Service: Ordinationer
+        Service-->>UI: Ordinationsdata
+        UI-->>Læge: Vis ordinationsdetaljer
+    end

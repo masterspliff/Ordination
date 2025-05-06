@@ -1,0 +1,30 @@
+sequenceDiagram
+    actor Læge
+    participant UI as Brugergrænsefladen
+    participant Service as DataService
+    participant PN as PN Ordination
+    participant DB as Database
+    
+    Læge->>UI: Vælg patient
+    UI->>Service: GetPatienter()
+    Service-->>UI: Liste af patienter
+    
+    Læge->>UI: Vælg PN ordination
+    UI->>Service: GetOrdinationerForPatient(patientId)
+    Service-->>UI: Liste af ordinationer
+    
+    Læge->>UI: Angiv dato for anvendelse
+    UI->>Service: anvendOrdinationPN(ordination, dato)
+    Service->>PN: givDosis(dato)
+    
+    alt Dato er gyldig (inden for ordinationsperioden)
+        PN->>DB: Gem anvendt dosis
+        DB-->>PN: Bekræft
+        PN-->>Service: True
+        Service-->>UI: True
+        UI-->>Læge: Vis bekræftelse
+    else Dato er ugyldig
+        PN-->>Service: False
+        Service-->>UI: False
+        UI-->>Læge: Vis fejlbesked
+    end
