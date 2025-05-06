@@ -367,9 +367,10 @@ FodyWeavers.xsd
 .aider*
 
 # pdf
+*.pdf
+aider.conf.yml
 
 *.pkg
 *.docx
 
-.aider.conf.yml
 CLAUDE.md
