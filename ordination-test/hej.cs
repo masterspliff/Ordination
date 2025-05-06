@@ -7,12 +7,12 @@ using System.Collections.Generic;
 /// </summary>
 public class UserManager
 {
-    // Rolle-konstanter for bedre læsbarhed
-    public static class Roles
+    // Rolle-enum for bedre type-sikkerhed og IDE-support
+    public enum Role
     {
-        public const int Administrator = 1;
-        public const int Editor = 2;
-        public const int User = 3;
+        Administrator = 1,
+        Editor = 2,
+        User = 3
     }
 
     // Ressource-konstanter for bedre læsbarhed
@@ -23,16 +23,16 @@ public class UserManager
     }
 
     private Dictionary<string, string> users = new Dictionary<string, string>();
-    private Dictionary<string, int> roles = new Dictionary<string, int>();
+    private Dictionary<string, Role> roles = new Dictionary<string, Role>();
 
     /// <summary>
     /// Tilføjer en ny bruger med angivet brugernavn, adgangskode og rolle
     /// </summary>
     /// <param name="username">Brugerens brugernavn</param>
     /// <param name="password">Brugerens adgangskode</param>
-    /// <param name="role">Brugerens rolle (brug Roles-konstanter)</param>
+    /// <param name="role">Brugerens rolle</param>
     /// <exception cref="ArgumentException">Hvis brugernavn eller adgangskode er null eller tom</exception>
-    public void AddUser(string username, string password, int role)
+    public void AddUser(string username, string password, Role role)
     {
         if (string.IsNullOrEmpty(username))
             throw new ArgumentException("Brugernavn må ikke være tomt", nameof(username));
@@ -74,16 +74,16 @@ public class UserManager
         if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(resource))
             return false;
 
-        if (!roles.TryGetValue(username, out int role))
+        if (!roles.TryGetValue(username, out Role role))
             return false;
 
         if (resource == Resources.Admin)
         {
-            return role == Roles.Administrator;
+            return role == Role.Administrator;
         }
         else if (resource == Resources.Editor)
         {
-            return role == Roles.Administrator || role == Roles.Editor;
+            return role == Role.Administrator || role == Role.Editor;
         }
         else
         {
@@ -103,7 +103,7 @@ public class UserManagerTests
     public static void TestAuthentication()
     {
         UserManager manager = new UserManager();
-        manager.AddUser("admin", "admin123", UserManager.Roles.Administrator);
+        manager.AddUser("admin", "admin123", UserManager.Role.Administrator);
         
         // Test med korrekte oplysninger
         bool success = manager.Authenticate("admin", "admin123");
@@ -124,9 +124,9 @@ public class UserManagerTests
     public static void TestAccessControl()
     {
         UserManager manager = new UserManager();
-        manager.AddUser("admin", "pass1", UserManager.Roles.Administrator);
-        manager.AddUser("editor", "pass2", UserManager.Roles.Editor);
-        manager.AddUser("user", "pass3", UserManager.Roles.User);
+        manager.AddUser("admin", "pass1", UserManager.Role.Administrator);
+        manager.AddUser("editor", "pass2", UserManager.Role.Editor);
+        manager.AddUser("user", "pass3", UserManager.Role.User);
     }
     
     /// <summary>
