@@ -1,0 +1,65 @@
+# Black Box Test Cases
+
+## Patient Class
+1. Test oprettelse af Patient med gyldige værdier
+2. Test oprettelse af Patient med negativ vægt
+3. Test oprettelse af Patient med vægt = 0
+4. Test setVægt med gyldig værdi
+5. Test setVægt med negativ værdi
+
+## PN Class
+1. Test oprettelse af PN med gyldige værdier
+2. Test givDosis på dato før startdato
+3. Test givDosis på dato efter slutdato
+4. Test givDosis på gyldig dato
+5. Test givDosis to gange på samme dato
+6. Test doegnDosis med forskellige antal dosis
+7. Test samletDosis med forskellige antal dosis
+
+## DagligFast Class
+1. Test oprettelse af DagligFast med gyldige værdier
+2. Test oprettelse af DagligFast med nogle doser = null
+3. Test doegnDosis beregning med alle doser
+4. Test samletDosis beregning over forskellige perioder
+
+## DagligSkæv Class
+1. Test oprettelse af DagligSkæv uden doser
+2. Test oprettelse af DagligSkæv med en række doser
+3. Test doegnDosis beregning med flere doser på forskellige tidspunkter
+4. Test samletDosis over forskellige perioder
+
+## DataService Class
+1. Test opretPN med gyldige værdier
+2. Test opretPN med ugyldig patient (null)
+3. Test opretPN med ugyldigt lægemiddel (null)
+4. Test opretPN med ugyldig startdato efter slutdato
+5. Test opretDagligFast med gyldige værdier
+6. Test opretDagligFast med manglende doser
+7. Test opretDagligSkæv med gyldige værdier
+8. Test opretDagligSkæv uden doser
+9. Test anvendOrdinationPN med gyldig ordination og dato
+10. Test anvendOrdinationPN med ugyldig dato
+
+## Use Case Test Cases
+### UC1: Opret Patient Ordination
+1. Opret gyldig PN ordination til eksisterende patient med eksisterende lægemiddel
+2. Opret gyldig DagligFast ordination til eksisterende patient med eksisterende lægemiddel
+3. Opret gyldig DagligSkæv ordination til eksisterende patient med eksisterende lægemiddel
+4. Forsøg at oprette ordination til ikke-eksisterende patient
+5. Forsøg at oprette ordination med ikke-eksisterende lægemiddel
+6. Forsøg at oprette ordination med slutdato før startdato
+7. Forsøg at oprette DagligFast med manglende morgen-, middag-, aften- eller nat-dosis
+8. Forsøg at oprette DagligSkæv uden doser
+
+### UC2: Anvend PN Ordination
+1. Anvend eksisterende PN ordination på gyldig dato inden for ordinationsperioden
+2. Forsøg at anvende PN ordination på dato før startdato
+3. Forsøg at anvende PN ordination på dato efter slutdato
+4. Forsøg at anvende PN ordination flere gange på samme dato
+5. Forsøg at anvende ikke-eksisterende PN ordination
+
+### UC3: Vis statistik
+1. Vis antal ordinationer per lægemiddel for hospital med ordinationer
+2. Vis antal ordinationer per lægemiddel for hospital uden ordinationer
+3. Vis ordinationsdetaljer for specifik patient med ordinationer
+4. Vis ordinationsdetaljer for specifik patient uden ordinationer
