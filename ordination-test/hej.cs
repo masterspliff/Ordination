@@ -127,21 +127,6 @@ public class UserManagerTests
         manager.AddUser("admin", "pass1", UserManager.Roles.Administrator);
         manager.AddUser("editor", "pass2", UserManager.Roles.Editor);
         manager.AddUser("user", "pass3", UserManager.Roles.User);
-        
-        // Test administrator adgang
-        Console.WriteLine($"Admin can access admin area: {manager.CanAccess("admin", UserManager.Resources.Admin)}");
-        Console.WriteLine($"Admin can access editor area: {manager.CanAccess("admin", UserManager.Resources.Editor)}");
-        
-        // Test editor adgang
-        Console.WriteLine($"Editor can access admin area: {manager.CanAccess("editor", UserManager.Resources.Admin)}");
-        Console.WriteLine($"Editor can access editor area: {manager.CanAccess("editor", UserManager.Resources.Editor)}");
-        
-        // Test almindelig bruger adgang
-        Console.WriteLine($"User can access admin area: {manager.CanAccess("user", UserManager.Resources.Admin)}");
-        Console.WriteLine($"User can access editor area: {manager.CanAccess("user", UserManager.Resources.Editor)}");
-        
-        // Test adgang til andre ressourcer
-        Console.WriteLine($"User can access public area: {manager.CanAccess("user", "public")}");
     }
     
     /// <summary>
@@ -149,10 +134,8 @@ public class UserManagerTests
     /// </summary>
     public static void RunAllTests()
     {
-        Console.WriteLine("Running authentication tests:");
         TestAuthentication();
         
-        Console.WriteLine("\nRunning access control tests:");
         TestAccessControl();
     }
 }
